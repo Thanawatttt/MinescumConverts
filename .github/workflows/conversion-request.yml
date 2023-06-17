@@ -1,5 +1,5 @@
 
-name: minescumconvert
+name: Conversion Request
 on:
   issues:
     types:
