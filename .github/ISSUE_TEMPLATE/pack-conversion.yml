@@ -1,7 +1,7 @@
 name: Pack Conversion
 description: Request an automated pack conversion
 title: "[Pack]: "
-labels: ["conversion"]
+labels: ["conversions"]
 body:
   - type: markdown
     attributes:
