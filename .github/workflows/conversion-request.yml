@@ -3,12 +3,11 @@ on:
   issues:
     types:
       - labeled
-      - opened
 
 jobs:
   get-pack-info:
     runs-on: ubuntu-latest
-    if: github.event.label.name == 'conversions'
+    if: github.event.label.name == 'conversion'
     permissions: 
       issues: read
     timeout-minutes: 2
