@@ -1,9 +1,9 @@
 
 name: minescumconvert
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
   issues:
     types:
+      - opened
       - labeled
 jobs:
   get-pack-info:
