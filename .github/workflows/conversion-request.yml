@@ -20,29 +20,3 @@ jobs:
       block_material: ${{ steps.organize-inputs.outputs.BLOCK_MATERIAL }}
       attachable_material: ${{ steps.organize-inputs.outputs.ATTACHABLE_MATERIAL }}
       archive_scratch: ${{ steps.organize-inputs.outputs.ARCHIVE_SCRATCH }}
-    steps:
-      - name: Issue Forms Body Parser
-        id: parse-issue
-        uses: zentered/issue-forms-body-parser@v1.5.1
-      - name: Organize Inputs
-        id: organize-inputs
-        run: |
-          echo ${{ toJSON(steps.parse-issue.outputs.data) }} | jq '
-          def test_input($input; $default):
-          if ($input == "*No response*" or $input == "None") then $default else ($input | tostring | gsub("\\\\";""))  end;
-          {
-            "pack_url": .["java-pack-direct-download-url"].text[1:-1],
-            "default_pack_url": test_input(.["default-pack-direct-download-url"].text; " null ")[1:-1],
-            "merge_pack_url": test_input(.["bedrock-merge-pack-direct-download-url"].text; " null ")[1:-1],
-            "default_assets_version": test_input(.["default-assets-version"].text; "1.19.3"),
-            "block_material": test_input(.["block-material"].text; "alpha_test"),
-            "attachable_material": test_input(.["attachable-material"].text; "entity_alphatest_one_sided"),
-            "archive_scratch": test_input(.["archive-scratch-files"].text; "false")
-          }' > inputs.json
-          echo "PACK_URL=$(jq -r '.pack_url' inputs.json)" >> $GITHUB_OUTPUT
-          echo "DEFAULT_PACK_URL=$(jq -r '.default_pack_url' inputs.json)" >> $GITHUB_OUTPUT
-          echo "MERGE_PACK_URL=$(jq -r '.merge_pack_url' inputs.json)" >> $GITHUB_OUTPUT
-          echo "DEFAULT_ASSETS_VERSION=$(jq -r '.default_assets_version' inputs.json)" >> $GITHUB_OUTPUT
-          echo "BLOCK_MATERIAL=$(jq -r '.block_material' inputs.json)" >> $GITHUB_OUTPUT
-          echo "ATTACHABLE_MATERIAL=$(jq -r '.attachable_material' inputs.json)" >> $GITHUB_OUTPUT
-          echo "ARCHIVE_SCRATCH=$(jq -r '.archive_scratch' inputs.json)" >> $GITHUB_OUTPUT
