@@ -1,9 +1,9 @@
 
-name: CI
+name: minescumconvert
 on:
-  issues:
+  label:
     types:
-      - labeled
+      - created
 
 jobs:
   get-pack-info:
